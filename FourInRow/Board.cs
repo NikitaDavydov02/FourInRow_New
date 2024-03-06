@@ -18,8 +18,8 @@ namespace FourInRow
         private List<Vector> minTranlations;
         public Board(GameMode gameMode, bool himanIsPlayingAsWhite)
         {
-            board = new int[7, 7];
-            for (int i = 0; i < 7; i++)
+            board = new int[6, 7];
+            for (int i = 0; i < 6; i++)
                 for (int j = 0; j < 7; j++)
                     board[i, j] = 0;
             whiteTurn = true;
@@ -64,7 +64,7 @@ namespace FourInRow
             int coin = 1;
             if (!white)
                 coin = -1;
-            int row = 6;
+            int row = 5;
             while (row >= 0 && board[row, turn] == 0)
                 row--;
             board[row + 1, turn] = coin;
@@ -72,14 +72,14 @@ namespace FourInRow
         }
         private bool IsMovePossible(bool white, int turn)
         {
-            if (board[6, turn] == 0)
+            if (board[5, turn] == 0)
                 return true;
             return false;
         }
         public void ReverseMove(int move)
         {
             int row = 0;
-            while (row < 7 && board[row, move] != 0)
+            while (row < 6 && board[row, move] != 0)
                 row++;
             board[row - 1, move] = 0;
             whiteTurn = !whiteTurn;
@@ -234,7 +234,7 @@ namespace FourInRow
         }
         private bool PositionIsOnTheField(Vector position)
         {
-            if (position.x < 7 && position.x >= 0 && position.y < 7 && position.y >= 0)
+            if (position.x < 6 && position.x >= 0 && position.y < 7 && position.y >= 0)
                 return true;
             return false;
         }
@@ -264,7 +264,7 @@ namespace FourInRow
         {
             bool noFreeColumns = true;
             for (int i = 0; i < 7; i++)
-                if (board[6, i] == 0)
+                if (board[5, i] == 0)
                 {
                     noFreeColumns = false;
                     break;
@@ -274,16 +274,16 @@ namespace FourInRow
                 gameStatus = GameStatus.Draw;
                 return true;
             }
-            for (int i=0;i<7;i++)
+            for (int i=0;i<6;i++)
                 for(int j = 0; j < 7; j++)
                 {
                     foreach(Vector translation in minTranlations)
                     {
                         int sum = 0;
                         Vector checkPosition = new Vector(i, j);
-                        for(int k = 0; k < 4 && checkPosition.y>=0 && checkPosition.x>=0 && checkPosition.y<7 && checkPosition.x<7; k++)
+                        for(int k = 0; k < 4 && PositionIsOnTheField(checkPosition); k++)
                         {
-                            sum += board[checkPosition.y, checkPosition.x];
+                            sum += board[checkPosition.x, checkPosition.y];
                             checkPosition = VectorMath.Sum(checkPosition, translation);
                         }
                         if (sum == 4)
@@ -306,7 +306,7 @@ namespace FourInRow
             Console.WriteLine();
             Console.WriteLine("0 1 2 3 4 5 6");
             Console.WriteLine("-------------");
-            for (int i = 6; i >=0; i--) 
+            for (int i = 5; i >=0; i--) 
             {
                 string line = "";
                 for (int j = 0; j < 7; j++)
@@ -326,7 +326,7 @@ namespace FourInRow
             List<int> output = new List<int>();
             for(int i = 0; i < 7; i++)
             {
-                if (board[6, i] == 0)
+                if (board[5, i] == 0)
                     output.Add(i);
             }
             return output;
@@ -341,12 +341,12 @@ namespace FourInRow
                     output.Add(new Vector(0, i));
             if (translation.x < 0)//Down
                 for (int i = 1; i < 6; i++)
-                    output.Add(new Vector(6, i));
+                    output.Add(new Vector(5, i));
             if (translation.y < 0)//Left
-                for (int i = 1; i < 6; i++)
+                for (int i = 1; i < 5; i++)
                     output.Add(new Vector(i, 6));
             if (translation.y > 0)//Right
-                for (int i = 1; i < 6; i++)
+                for (int i = 1; i < 5; i++)
                     output.Add(new Vector(i, 0));
 
             if (translation.x > 0)
@@ -355,17 +355,17 @@ namespace FourInRow
                 output.Add(new Vector(0, 0));
                 if (translation.y > 0)
                 {
-                    output.Add(new Vector(6, 0));
+                    output.Add(new Vector(5, 0));
                 }
                 if (translation.y < 0)
                 {
-                    output.Add(new Vector(6, 6));
+                    output.Add(new Vector(5, 6));
                 }
             }
             if (translation.x < 0)
             {
-                output.Add(new Vector(6, 6));
-                output.Add(new Vector(6, 0));
+                output.Add(new Vector(5, 6));
+                output.Add(new Vector(5, 0));
                 if (translation.y > 0)
                 {
                     output.Add(new Vector(0, 0));
@@ -379,12 +379,12 @@ namespace FourInRow
             {
                 if (translation.y >0)
                 {
-                    output.Add(new Vector(6, 0));
+                    output.Add(new Vector(5, 0));
                     output.Add(new Vector(0, 0));
                 }
                 if (translation.y < 0)
                 {
-                    output.Add(new Vector(6, 6));
+                    output.Add(new Vector(5, 6));
                     output.Add(new Vector(0, 6));
                 }
                 if (translation.y ==0) { throw new Exception(); }

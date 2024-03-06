@@ -37,9 +37,9 @@ namespace FourInRow
             if (gameMode == GameMode.SolveTask)
             {
                 StreamReader sr = new StreamReader("input.txt");
-                int[,] position = new int[7, 7];
-                int row = 6;
-                for(int i = 0; i < 7; i++)
+                int[,] position = new int[6, 7];
+                int row = 5;
+                for(int i = 0; i < 6; i++)
                 {
                     string[] line = sr.ReadLine().Split(' ');
                     for (int j = 0; j < 7; j++)
