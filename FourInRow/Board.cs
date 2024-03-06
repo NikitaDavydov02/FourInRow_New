@@ -238,36 +238,7 @@ namespace FourInRow
                 return true;
             return false;
         }
-        private List<Vector> InitialFieldsForCheckStart(Vector translation)
-        {
-            List<Vector> output = new List<Vector>();
-            //Up
-            /*if (translation.x == 0 && translation.y == 1)//Up
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(0, i));
-            else if (translation.x == 0 && translation.y == -1)//Down
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(6, i));
-            else if (translation.x == -1 && translation.y == 0)//Left
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(i, 6));
-            else if (translation.x == 1 && translation.y ==0)//Right
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(i, 0));*/
-            if (translation.x >0)//Up
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(0, i));
-            if (translation.x <0)//Down
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(6, i));
-            if (translation.y <0)//Left
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(i, 6));
-            if (translation.y >0)//Right
-                for (int i = 0; i < 7; i++)
-                    output.Add(new Vector(i, 0));
-            return output;
-        }
+        
         public double EstimatePosition()
         {
             return AdvancedPositionEstimation();
@@ -358,6 +329,67 @@ namespace FourInRow
                 if (board[6, i] == 0)
                     output.Add(i);
             }
+            return output;
+        }
+        private List<Vector> InitialFieldsForCheckStart(Vector translation)
+        {
+            List<Vector> output = new List<Vector>();
+            
+
+            if (translation.x > 0)//Up
+                for (int i = 1; i < 6; i++)
+                    output.Add(new Vector(0, i));
+            if (translation.x < 0)//Down
+                for (int i = 1; i < 6; i++)
+                    output.Add(new Vector(6, i));
+            if (translation.y < 0)//Left
+                for (int i = 1; i < 6; i++)
+                    output.Add(new Vector(i, 6));
+            if (translation.y > 0)//Right
+                for (int i = 1; i < 6; i++)
+                    output.Add(new Vector(i, 0));
+
+            if (translation.x > 0)
+            {
+                output.Add(new Vector(0, 6));
+                output.Add(new Vector(0, 0));
+                if (translation.y > 0)
+                {
+                    output.Add(new Vector(6, 0));
+                }
+                if (translation.y < 0)
+                {
+                    output.Add(new Vector(6, 6));
+                }
+            }
+            if (translation.x < 0)
+            {
+                output.Add(new Vector(6, 6));
+                output.Add(new Vector(6, 0));
+                if (translation.y > 0)
+                {
+                    output.Add(new Vector(0, 0));
+                }
+                if (translation.y < 0)
+                {
+                    output.Add(new Vector(0, 6));
+                }
+            }
+            if (translation.x == 0)
+            {
+                if (translation.y >0)
+                {
+                    output.Add(new Vector(6, 0));
+                    output.Add(new Vector(0, 0));
+                }
+                if (translation.y < 0)
+                {
+                    output.Add(new Vector(6, 6));
+                    output.Add(new Vector(0, 6));
+                }
+                if (translation.y ==0) { throw new Exception(); }
+            }
+
             return output;
         }
     }

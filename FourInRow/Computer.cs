@@ -70,7 +70,7 @@ namespace FourInRow
                 return 0;
             }
             bestMove = possibleMoves[0];
-            if (depth == 10)
+            if (depth == 12)
             {
                 //Final estimation
                 return EstimateFinalPosition(board);

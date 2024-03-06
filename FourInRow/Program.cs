@@ -10,6 +10,7 @@ namespace FourInRow
             Console.WriteLine("1 - Two players");
             Console.WriteLine("2 - Against Computer");
             Console.WriteLine("3 - Solve task");
+            Console.WriteLine("4 - Computer vs Computer");
             string gameModeInput = Console.ReadLine();
             GameMode gameMode = GameMode.TwoPlayers;
             if (gameModeInput == "1")
@@ -18,6 +19,8 @@ namespace FourInRow
                 gameMode = GameMode.AgainstComputer;
             if (gameModeInput == "3")
                 gameMode = GameMode.SolveTask;
+            if (gameModeInput == "4")
+                gameMode = GameMode.ComputerVsComputer;
             bool humanIsPlayingAsWhite = true;
             if (gameMode == GameMode.AgainstComputer||gameMode==GameMode.SolveTask)
             {
@@ -62,7 +65,7 @@ namespace FourInRow
                     Console.WriteLine("White to turn");
                 else
                     Console.WriteLine("Black to turn");
-                if (((board.whiteTurn && !humanIsPlayingAsWhite) || (!board.whiteTurn && humanIsPlayingAsWhite)) && (gameMode == GameMode.AgainstComputer||gameMode==GameMode.SolveTask))
+                if ((((board.whiteTurn && !humanIsPlayingAsWhite) || (!board.whiteTurn && humanIsPlayingAsWhite)) && (gameMode == GameMode.AgainstComputer || gameMode == GameMode.SolveTask)) || gameMode==GameMode.ComputerVsComputer)
                 {
                     //Computers move
                     int computersMove = computer.FindTheBestMoveForPosition(board, board.whiteTurn);
@@ -110,6 +113,7 @@ namespace FourInRow
         TwoPlayers,
         AgainstComputer,
         SolveTask,
+        ComputerVsComputer,
     }
 
 }
